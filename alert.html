@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Important Mail Alert</title>
+  <style>
+    body {
+      background-color: #2b3640;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+      box-sizing: border-box;
+      user-select: none;
+      overflow: hidden;
+    }
+    .header-title {
+      margin: 0 0 6px 0;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    .mail-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .label {
+      font-weight: bold;
+      opacity: 0.85;
+      margin-right: 4px;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 7px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+      transition: opacity 0.15s, background-color 0.15s;
+    }
+    button:hover { opacity: 0.9; }
+    .btn-close {
+      background: transparent;
+      border: 1px solid currentColor;
+      color: inherit;
+      opacity: 0.7;
+    }
+    .btn-close:hover { opacity: 1; }
+    .btn-open {
+      background: #2563eb;
+      color: #ffffff !important;
+      border: none;
+    }
+    .btn-open:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="mail-info">
+    <div id="headerTitle" class="header-title" data-i18n="alertHeader"></div>
+    <p><span class="label" data-i18n="labelFrom"></span><span id="author"></span></p>
+    <p><span class="label" data-i18n="labelSubject"></span><span id="subject"></span></p>
+  </div>
+
+  <div class="btn-container">
+    <button id="closeBtn" class="btn-close" data-i18n="btnClose"></button>
+    <button id="openBtn" class="btn-open" data-i18n="btnOpenMail"></button>
+  </div>
+
+  <script src="alert.js"></script>
+</body>
+</html>

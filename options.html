@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Options</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; 
+      padding: 20px; 
+      background: #f8fafc; 
+      color: #1e293b; 
+      max-width: 650px; 
+      margin: 0 auto; 
+    }
+    h2 { font-size: 20px; margin-top: 0; color: #1e3a8a; }
+    h3 { font-size: 14px; margin: 18px 0 8px; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
+    p.desc { font-size: 13px; color: #64748b; margin-bottom: 12px; }
+
+    .accounts-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 15px;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+    .account-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+    .account-item:last-child { border-bottom: none; }
+    .account-name { font-weight: bold; color: #0f172a; }
+    .account-email { color: #64748b; margin-left: 4px; }
+
+    textarea { 
+      width: 100%; 
+      height: 50px; 
+      font-family: monospace; 
+      padding: 8px; 
+      box-sizing: border-box; 
+      border: 1px solid #cbd5e1; 
+      border-radius: 6px; 
+      margin-bottom: 15px; 
+      font-size: 13px; 
+    }
+
+    .palette-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    .color-swatch {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid #cbd5e1;
+      transition: transform 0.1s, border-color 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .color-swatch:hover { transform: scale(1.08); }
+    .color-swatch.active { border: 3px solid #2563eb; outline: 2px solid #93c5fd; }
+
+    .sound-section { background: #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+    .sound-control { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-weight: 600; font-size: 14px; }
+    .file-input-wrapper { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .file-btn, .test-btn {
+      background: #475569;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      border: none;
+    }
+    .file-btn:hover, .test-btn:hover { background: #334155; }
+    #audioFile { display: none; }
+    #fileName { font-size: 13px; color: #475569; font-style: italic; }
+
+    .btn-block { display: flex; align-items: center; gap: 12px; }
+    button.save-btn { 
+      background: #2563eb; 
+      color: white; 
+      border: none; 
+      padding: 10px 20px; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      font-size: 14px; 
+    }
+    button.save-btn:hover { background: #1d4ed8; }
+    button.secondary-btn {
+      background: #64748b;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    button.secondary-btn:hover { background: #475569; }
+    #status { font-size: 13px; color: #16a34a; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2 data-i18n="optionsTitle"></h2>
+
+  <h3 data-i18n="secAccounts"></h3>
+  <p class="desc" data-i18n="secAccountsDesc"></p>
+  <div id="accountsList" class="accounts-box"></div>
+
+  <h3 data-i18n="secAliases"></h3>
+  <textarea id="emailsList" placeholder="alias@domain.com&#10;team@domain.com"></textarea>
+
+  <h3 data-i18n="secTint"></h3>
+  <p class="desc" data-i18n="secTintDesc"></p>
+  <div id="palette" class="palette-grid"></div>
+
+  <h3 data-i18n="secSound"></h3>
+  <div class="sound-section">
+    <div class="sound-control">
+      <input type="checkbox" id="enableSound">
+      <label for="enableSound" style="cursor: pointer;" data-i18n="soundEnable"></label>
+    </div>
+    <div class="file-input-wrapper">
+      <label class="file-btn" for="audioFile" data-i18n="soundSelectBtn"></label>
+      <input type="file" id="audioFile" accept="audio/wav, audio/mpeg">
+      <button id="testAudioBtn" class="test-btn" type="button" data-i18n="soundTestBtn"></button>
+      <span id="fileName"></span>
+    </div>
+  </div>
+
+  <div class="btn-block">
+    <button id="saveBtn" class="save-btn" data-i18n="btnSave"></button>
+    <button id="testWindowBtn" type="button" class="secondary-btn" data-i18n="btnTestWindow"></button>
+    <div id="status"></div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
