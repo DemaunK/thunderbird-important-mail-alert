@@ -1,7 +1,18 @@
-// Open the options page when clicking the toolbar icon
-if (browser.action) {
-  browser.action.onClicked.addListener(() => {
-    browser.runtime.openOptionsPage();
+// Universal handler for toolbar button click (compatible with both browser.action and browser.browserAction)
+const actionApi = browser.action || browser.browserAction;
+if (actionApi) {
+  actionApi.onClicked.addListener(async () => {
+    try {
+      await browser.runtime.openOptionsPage();
+    } catch (err) {
+      console.warn("[AlertPlugin] openOptionsPage failed, opening popup window fallback:", err);
+      await browser.windows.create({
+        url: browser.runtime.getURL("options.html"),
+        type: "popup",
+        width: 680,
+        height: 600
+      });
+    }
   });
 }
 
@@ -20,7 +31,6 @@ browser.messages.onNewMailReceived.addListener(async (folder, messageList) => {
   const importantEmails = (data.importantEmails || []).map(e => e.toLowerCase().trim());
   if (importantEmails.length === 0) return;
 
-  // Retrieve email addresses (identities) of the target mailbox
   let accountEmails = [];
   if (folder && folder.accountId) {
     try {
@@ -34,10 +44,8 @@ browser.messages.onNewMailReceived.addListener(async (folder, messageList) => {
   }
 
   for (const msg of messageList.messages) {
-    // Check 1: Match against target Thunderbird account identity
     let isTarget = accountEmails.some(acc => importantEmails.includes(acc));
-    
-    // Check 2: Fallback check against message recipients (To / CC)
+
     if (!isTarget && msg.recipients) {
       const rec = msg.recipients.join(" ").toLowerCase();
       isTarget = importantEmails.some(target => rec.includes(target));
@@ -45,7 +53,7 @@ browser.messages.onNewMailReceived.addListener(async (folder, messageList) => {
 
     if (isTarget) {
       await spawnAlertWindow(msg.author, msg.subject, msg.id);
-      break; 
+      break;
     }
   }
 }, true);
@@ -58,7 +66,6 @@ async function spawnAlertWindow(author, subject, messageId, customColorId = null
   const winHeight = 210;
   const margin = 20;
 
-  // Calculate coordinates taking the Windows taskbar into account
   const screenWidth = screen.availWidth || 1920;
   const screenHeight = screen.availHeight || 1080;
   const screenLeft = screen.availLeft || 0;
@@ -71,4 +78,24 @@ async function spawnAlertWindow(author, subject, messageId, customColorId = null
   const subjectEnc = encodeURIComponent(subject || "");
   const activeColorId = customColorId || data.alertColorId || "blue";
   const colorId = encodeURIComponent(activeColorId);
-  const msgParam =
+  const msgParam = messageId ? `&messageId=${messageId}` : "";
+
+  const targetUrl = browser.runtime.getURL(
+    `alert.html?author=${authorEnc}&subject=${subjectEnc}&colorId=${colorId}${msgParam}`
+  );
+
+  try {
+    const win = await browser.windows.create({
+      url: targetUrl,
+      type: "popup",
+      width: winWidth,
+      height: winHeight,
+      left: posX,
+      top: posY
+    });
+
+    await browser.windows.update(win.id, { drawAttention: true });
+  } catch (err) {
+    console.error("[AlertPlugin] Failed to create alert window:", err);
+  }
+}
