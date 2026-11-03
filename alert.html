@@ -4,84 +4,124 @@
   <meta charset="utf-8">
   <title>Important Mail Alert</title>
   <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
     body {
-      background-color: #2b3640;
-      color: #e2e8f0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       margin: 0;
       padding: 16px;
+      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: var(--card-bg, #2b3640);
+      color: var(--text-main, #e2e8f0);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100vh;
-      box-sizing: border-box;
-      user-select: none;
       overflow: hidden;
+      transition: background-color 0.15s ease, color 0.15s ease;
     }
-    .header-title {
-      margin: 0 0 6px 0;
+
+    .header-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .mail-icon {
       font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      opacity: 0.9;
+      line-height: 1;
+      opacity: 0.85;
     }
+
+    .header-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--title-color, #64b5f6);
+    }
+
     .mail-info {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
-    p {
+
+    .info-row {
       margin: 0;
       font-size: 13px;
       line-height: 1.4;
-      word-break: break-all;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      word-break: break-all;
     }
+
     .label {
-      font-weight: bold;
-      opacity: 0.85;
-      margin-right: 4px;
+      font-weight: 700;
+      opacity: 0.8;
+      margin-right: 5px;
     }
+
     .btn-container {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
+      margin-top: 12px;
     }
+
+    /* Системные десктопные кнопки */
     button {
-      padding: 7px 14px;
+      padding: 6px 14px;
       border-radius: 4px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 12px;
-      transition: opacity 0.15s, background-color 0.15s;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+      font-family: inherit;
     }
-    button:hover { opacity: 0.9; }
+
+    /* Второстепенная кнопка «Закрыть» */
     .btn-close {
-      background: transparent;
-      border: 1px solid currentColor;
+      background: rgba(127, 127, 127, 0.15);
       color: inherit;
-      opacity: 0.7;
+      border: 1px solid rgba(127, 127, 127, 0.3);
     }
-    .btn-close:hover { opacity: 1; }
+
+    .btn-close:hover {
+      background: rgba(127, 127, 127, 0.25);
+      border-color: rgba(127, 127, 127, 0.45);
+    }
+
+    /* Главная кнопка «Открыть письмо» — сдержанный системный акцент */
     .btn-open {
-      background: #2563eb;
-      color: #ffffff !important;
-      border: none;
+      background: rgba(255, 255, 255, 0.16);
+      color: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.35);
     }
-    .btn-open:hover { background: #1d4ed8; }
+
+    .btn-open:hover {
+      background: rgba(255, 255, 255, 0.26);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
   </style>
 </head>
 <body>
-  <div class="mail-info">
-    <div id="headerTitle" class="header-title" data-i18n="alertHeader"></div>
-    <p><span class="label" data-i18n="labelFrom"></span><span id="author"></span></p>
-    <p><span class="label" data-i18n="labelSubject"></span><span id="subject"></span></p>
+  <div>
+    <div class="header-bar">
+      <span class="mail-icon">✉</span>
+      <div id="headerTitle" class="header-title" data-i18n="alertHeader"></div>
+    </div>
+
+    <div class="mail-info">
+      <p class="info-row"><span class="label" data-i18n="labelFrom"></span><span id="author"></span></p>
+      <p class="info-row"><span class="label" data-i18n="labelSubject"></span><span id="subject"></span></p>
+    </div>
   </div>
 
   <div class="btn-container">

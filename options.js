@@ -1,18 +1,33 @@
+// Vibrant rainbow swatches for the picker, mapped to their adaptive themes
 const PALETTE = [
-  { id: "blue",     preview: "#2b3640" },
-  { id: "ocean",    preview: "#1e3842" },
-  { id: "emerald",  preview: "#1e3831" },
-  { id: "purple",   preview: "#35263b" },
-  { id: "wine",     preview: "#3d262b" },
-  { id: "bronze",   preview: "#382d24" },
-  { id: "navy",     preview: "#212836" },
-  { id: "olive",    preview: "#2c3323" },
-  { id: "steel",    preview: "#30343a" },
-  { id: "slate",    preview: "#1c2530" }
+  { id: "blue",     dot: "#3b82f6", dark: { bg: "#2b3640", text: "#e2e8f0", title: "#64b5f6" }, light: { bg: "#e2edf8", text: "#1e293b", title: "#1e40af" } },
+  { id: "ocean",    dot: "#06b6d4", dark: { bg: "#1e3842", text: "#e2e8f0", title: "#4dd0e1" }, light: { bg: "#e0f2f1", text: "#0f172a", title: "#00695c" } },
+  { id: "emerald",  dot: "#10b981", dark: { bg: "#1e3831", text: "#e2e8f0", title: "#81c784" }, light: { bg: "#e8f5e9", text: "#0f172a", title: "#2e7d32" } },
+  { id: "olive",    dot: "#84cc16", dark: { bg: "#2c3323", text: "#e2e8f0", title: "#aed581" }, light: { bg: "#f1f8e9", text: "#141e0b", title: "#3f6212" } },
+  { id: "bronze",   dot: "#f59e0b", dark: { bg: "#382d24", text: "#e2e8f0", title: "#ffb74d" }, light: { bg: "#efebe9", text: "#1c1917", title: "#78350f" } },
+  { id: "wine",     dot: "#ef4444", dark: { bg: "#3d262b", text: "#e2e8f0", title: "#f06292" }, light: { bg: "#fce4ec", text: "#1c1917", title: "#9d174d" } },
+  { id: "purple",   dot: "#a855f7", dark: { bg: "#35263b", text: "#e2e8f0", title: "#ba68c8" }, light: { bg: "#f3e5f5", text: "#1e1b4b", title: "#6b21a8" } },
+  { id: "navy",     dot: "#6366f1", dark: { bg: "#212836", text: "#e2e8f0", title: "#7986cb" }, light: { bg: "#e8eaf6", text: "#0f172a", title: "#3730a3" } },
+  { id: "steel",    dot: "#64748b", dark: { bg: "#30343a", text: "#e2e8f0", title: "#90a4ae" }, light: { bg: "#eceff1", text: "#1e293b", title: "#374151" } },
+  { id: "slate",    dot: "#0f172a", dark: { bg: "#1c2530", text: "#e2e8f0", title: "#5eead4" }, light: { bg: "#e6f4f8", text: "#0f172a", title: "#0e7490" } }
 ];
 
 let savedAudioData = null;
 let selectedColorId = "blue";
+
+function updatePreview(colorId) {
+  const isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const item = PALETTE.find(c => c.id === colorId) || PALETTE[0];
+  const theme = isDark ? item.dark : item.light;
+
+  const card = document.getElementById("previewCard");
+  const header = document.getElementById("prevHeader");
+  if (card && header) {
+    card.style.backgroundColor = theme.bg;
+    card.style.color = theme.text;
+    header.style.color = theme.title;
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   // 1. Localize static UI elements
@@ -38,21 +53,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   savedAudioData = data.audioData;
   selectedColorId = data.alertColorId || "blue";
 
-  // 2. Render color palette swatches
+  // 2. Render color swatches
   const paletteContainer = document.getElementById("palette");
   paletteContainer.innerHTML = "";
   PALETTE.forEach(c => {
     const el = document.createElement("div");
     el.className = "color-swatch" + (c.id === selectedColorId ? " active" : "");
-    el.style.backgroundColor = c.preview;
+    el.style.backgroundColor = c.dot;
     el.title = browser.i18n.getMessage("color_" + c.id);
     el.addEventListener("click", () => {
       selectedColorId = c.id;
       document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("active"));
       el.classList.add("active");
+      updatePreview(c.id);
     });
     paletteContainer.appendChild(el);
   });
+
+  // Init live preview card
+  updatePreview(selectedColorId);
 
   // 3. Load connected Thunderbird accounts
   const accountsContainer = document.getElementById("accountsList");
