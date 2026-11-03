@@ -11,13 +11,14 @@ Standard Thunderbird notifications disappear automatically after 5 seconds and o
 
 ## ✨ Features
 
-- **Never Miss an Email**: Persistent alert window that stays visible until dismissed manually.
-- **Direct Mail Navigation**: One-click "Open email →" button opens the message tab in Thunderbird and brings the main window to focus.
-- **Smart Account Filtering**: Select 1–3 priority accounts out of many connected mailboxes via convenient checkboxes.
-- **Light & Dark Theme Adaptation**: The window tone automatically adjusts based on your Windows/Thunderbird system theme.
-- **10 Palette Tints**: Choose from 10 stylish hues (slate blue, oceanic, emerald, wine, etc.) with real-time preview.
-- **Custom Sound Support**: Set an optional `.mp3` or `.wav` sound alert.
-- **Multilingual**: Automatic language detection (English / Russian).
+- **Never Miss an Email**: Persistent, non-dismissing alert window anchored at the bottom-right corner (above the system tray) that stays visible until manually closed.
+- **Direct Mail Navigation**: One-click "Open email →" button brings Thunderbird to focus and immediately opens the message in a tab.
+- **Smart Account Filtering**: Easily select priority mailboxes out of all connected accounts via checkboxes, plus optional alias/mailing-list support.
+- **Native Look & Feel**: Strict 4px border radii, native Thunderbird/OS desktop button styling, and solid background fills matching your desktop environment.
+- **Light & Dark Theme Adaptation**: Both the notification window and the options page automatically adapt to Windows/Thunderbird system themes.
+- **10 Palette Tints with Live Preview**: Vibrant, recognizable color swatches with an instant real-time preview card directly in the settings.
+- **Custom Sound Notifications**: Support for custom `.mp3` or `.wav` audio alerts.
+- **Global Multilingual Support**: Automatic interface detection for **8 languages**: English, Russian, German, Spanish, French, Italian, Japanese, and Portuguese.
 
 ---
 
