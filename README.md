@@ -9,7 +9,7 @@ Standard Thunderbird notifications disappear automatically after 5 seconds and o
 
 ---
 
-## ✨ Features
+# ✨ Features
 
 - **Critical Mailbox Focus**  
   Triggers non-dismissing, sticky alerts *only* for your selected priority inboxes (e.g., website orders or VIP clients) out of dozens of connected accounts.
@@ -39,12 +39,36 @@ Standard Thunderbird notifications disappear automatically after 5 seconds and o
 
 If this extension saves your time and helps your workflow, you can buy me a coffee:
 
-- **Ko-fi**: [Support on Ko-fi](https://ko-fi.com/) *(Add your link here)*
-- **Boosty**: [Support on Boosty](https://boosty.to/) *(Add your link here)*
+Если вам помог этот плагин, поддержите автора любым удобным способом:
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="160">
+      <!-- Кастомный стикер для NOWPayments -->
+      <a href="https://nowpayments.io/donation/thanksforthecoffee?p=important-mail-alert">
+        <img src="assets/donate.svg" width="100%" style="background: #fff8ec; border: 2px dashed #ffb12a; border-radius: 16px; padding: 10px; box-shadow: 2px 4px 10px rgba(0,0,0,0.1);" alt="Donate Crypto"/>
+      </a>
+      <br/><b>Crypto via <a href="https://nowpayments.io/donation/thanksforthecoffee?p=important-mail-alert">NOWPayments<a></b>
+    </td>
+    <td valign="middle">
+      • <b>В рублях (Карты РФ / СБП):</b> <a href="https://pay.cloudtips.ru/p/25bd5052">Поддержать через CloudTips</a><br/>
+      <details>
+        <summary>QR-code CloudTips</summary>
+        <img src="assets/ctqr.svg" width="200" alt="CloudTips QR" style="margin-top: 8px; border-radius: 8px;"/>
+      </details>
+      • <b>Telegram / GRAM:</b> <a href="https://tonhub.com/transfer/UQDnGXbwiSak1mssK501iLCM1ZFPc87Kf-YtJ1OGgoupt64l">Оплатить в 1 клик</a> (или через ID: <code>UQDnGXbwiSak1mssK501iLCM1ZFPc87Kf-YtJ1OGgoupt64l</code>)<br/>
+      • <b>Binance Pay:</b> UID: <code>270361746</code>
+      <details style="margin-top: 4px;">
+        <summary style="cursor: pointer; color: #58a6ff;">QR-code Binance Pay</summary>
+        <img src="assets/biqr.svg" width="200" alt="Binance Pay QR" style="margin-top: 8px; border-radius: 8px;"/>
+      </details>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 🇷🇺 Краткое описание (на русском)
+## Краткое описание
 
 Кастомный плагин под Mozilla Thunderbird (Manifest V3), решающий проблему исчезающих 5-секундных стандартных оповещений:
 - Создает постоянное всплывающее окно в правом нижнем углу над треем.
