@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 2. Render color swatches
   const paletteContainer = document.getElementById("palette");
-  paletteContainer.innerHTML = "";
+  paletteContainer.replaceChildren();
   PALETTE.forEach(c => {
     const el = document.createElement("div");
     el.className = "color-swatch" + (c.id === selectedColorId ? " active" : "");
@@ -75,15 +75,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 3. Load connected Thunderbird accounts
   const accountsContainer = document.getElementById("accountsList");
-  accountsContainer.innerHTML = `<i>${browser.i18n.getMessage("loadingAccounts")}</i>`;
+  
+  const loadingItalic = document.createElement("i");
+  loadingItalic.textContent = browser.i18n.getMessage("loadingAccounts");
+  accountsContainer.replaceChildren(loadingItalic);
 
   try {
     const accounts = await browser.accounts.list();
     if (accounts.length === 0) {
-      accountsContainer.innerHTML = `<i>${browser.i18n.getMessage("noAccounts")}</i>`;
+      const noAccItalic = document.createElement("i");
+      noAccItalic.textContent = browser.i18n.getMessage("noAccounts");
+      accountsContainer.replaceChildren(noAccItalic);
       return;
     }
-    accountsContainer.innerHTML = "";
+    accountsContainer.replaceChildren();
     accounts.forEach(acc => {
       if (!acc.identities) return;
       acc.identities.forEach(identity => {
@@ -93,18 +98,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const row = document.createElement("div");
         row.className = "account-item";
-        row.innerHTML = `
-          <input type="checkbox" id="chk_${emailLower}" value="${emailLower}" ${isChecked ? "checked" : ""}>
-          <label for="chk_${emailLower}" style="cursor: pointer;">
-            <span class="account-name">${acc.name}</span>
-            <span class="account-email">(${identity.email})</span>
-          </label>
-        `;
+
+        const chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.id = "chk_" + emailLower;
+        chk.value = emailLower;
+        chk.checked = isChecked;
+
+        const lbl = document.createElement("label");
+        lbl.htmlFor = "chk_" + emailLower;
+        lbl.style.cursor = "pointer";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "account-name";
+        nameSpan.textContent = acc.name || "";
+
+        const emailSpan = document.createElement("span");
+        emailSpan.className = "account-email";
+        emailSpan.textContent = ` (${identity.email})`;
+
+        lbl.append(nameSpan, emailSpan);
+        row.append(chk, lbl);
         accountsContainer.appendChild(row);
       });
     });
   } catch (err) {
-    accountsContainer.innerHTML = `<span style="color:red">${browser.i18n.getMessage("accountsError")}${err.message}</span>`;
+    const errSpan = document.createElement("span");
+    errSpan.style.color = "red";
+    errSpan.textContent = browser.i18n.getMessage("accountsError") + (err.message || "");
+    accountsContainer.replaceChildren(errSpan);
   }
 });
 

@@ -3,7 +3,7 @@
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
-  "version": "2.1",
+  "version": "2.1.1",
   "permissions": [
     "messagesRead",
     "accountsRead",
@@ -18,5 +18,11 @@
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
-  }
+  },
+ "browser_specific_settings": {
+    "gecko": {
+      "id": "important-mail-alert@demaunk",
+      "strict_min_version": "128.0"
+    }
+  } 
 }

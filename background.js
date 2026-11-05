@@ -27,6 +27,11 @@ browser.runtime.onMessage.addListener((request) => {
 browser.messages.onNewMailReceived.addListener(async (folder, messageList) => {
   if (!messageList || !messageList.messages) return;
 
+  // 1. Игнорируем письма, если они сразу попали в спам или корзину
+  if (folder && (folder.type === "junk" || folder.type === "trash")) {
+    return;
+  }
+
   const data = await browser.storage.local.get({ importantEmails: [] });
   const importantEmails = (data.importantEmails || []).map(e => e.toLowerCase().trim());
   if (importantEmails.length === 0) return;
@@ -44,6 +49,11 @@ browser.messages.onNewMailReceived.addListener(async (folder, messageList) => {
   }
 
   for (const msg of messageList.messages) {
+    // 2. Игнорируем письма, помеченные почтовиком как спам или уже прочитанные
+    if (msg.junk === true || msg.junkScore === 100 || msg.read === true) {
+      continue;
+    }
+
     let isTarget = accountEmails.some(acc => importantEmails.includes(acc));
 
     if (!isTarget && msg.recipients) {
